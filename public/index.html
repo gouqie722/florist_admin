@@ -10,33 +10,13 @@
   111
   <button>获取</button>
   <button>登录</button>
+  <button>退出登录</button>
+  <button>注册</button>
+  <button class="put">确认上架</button>
+  <button class="cart">购物车列表</button>
+  <img alt="">
+  <input type="file" />
   <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
-  <script>
-    document.getElementsByTagName('button')[0].addEventListener('click', () => {
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', '/api/user/getUsers');
-      xhr.withCredentials = true;
-      xhr.send();
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-          const res = JSON.parse(xhr.responseText);
-          console.log(xhr, res);
-        }
-      }
-    }, false);
-    document.getElementsByTagName('button')[1].addEventListener('click', () => {
-      axios.post('/api/user/login', {
-        username: '123',
-        password: '456'
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }, false);
-    console.log(axios);
-  </script>
+  <script src="./index.js"></script>
 </body>
 </html>

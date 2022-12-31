@@ -9,10 +9,10 @@ module.exports = function (options = {}) {
       }
     }
 
-    ctx.fail = function (data) {
+    ctx.fail = function (data, code) {
       ctx.type = options.type || 'json'
       ctx.body = {
-        code: options.code || 500,
+        code: code || 500,
         msg: data || 'fail',
         // data
       }
