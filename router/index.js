@@ -2,6 +2,7 @@ const Router = require('koa-router');
 const user = require('./user.js');
 const flower = require('./flower.js');
 const cart = require('./cart.js');
+const order = require('./order.js');
 
 // 设置前缀
 const router = new Router({
@@ -13,6 +14,8 @@ router.use('/user', user.routes());
 router.use('/flower', flower.routes());
 
 router.use('/cart', cart.routes());
+
+router.use('/order', order.routes());
 
 router.use('/log', ctx => {
 

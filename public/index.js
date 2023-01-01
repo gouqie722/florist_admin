@@ -101,6 +101,20 @@ putBtn.addEventListener('click', () => {
   });
 }, false);
 
+
+const item = document.getElementsByClassName('item')[0];
+item.addEventListener('click', () => {
+  axios.get('/api/flower/list', {
+    headers: { token: localStorage.getItem('token') },
+  })
+  .then(function (response) {
+    console.log(response.data, '商品列表');
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}, false)
+
 const cart = document.getElementsByClassName('cart')[0];
 cart.addEventListener('click', () => {
   axios.get('/api/cart/list', {
@@ -108,6 +122,36 @@ cart.addEventListener('click', () => {
   })
   .then(function (response) {
     console.log(response.data, '购物车列表');
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}, false);
+
+
+const cart_add = document.getElementsByClassName('cart_add')[0];
+cart_add.addEventListener('click', () => {
+  axios.post('/api/cart/add', {
+    num: 2,
+    flowerId: '63b05a08c2a8a4eb211e6a54'
+  }, {
+    headers: { token: localStorage.getItem('token') },
+  })
+  .then(function (response) {
+    console.log(response.data, '添加成功 =》购物车');
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}, false);
+
+const clear = document.getElementsByClassName('clear')[0];
+clear.addEventListener('click', () => {
+  axios.post('/api/cart/clear', {}, {
+    headers: { token: localStorage.getItem('token') },
+  })
+  .then(function (response) {
+    console.log(response.data, '清空成功 =》购物车');
   })
   .catch(function (error) {
     console.log(error);
