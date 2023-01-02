@@ -2,7 +2,7 @@ const Koa = require('koa');
 const static = require('koa-static');
 // const Router = require('koa-router');
 const session = require('koa-session');
-const cors = require('koa-cors');
+const cors = require('koa2-cors');
 const bodyParser = require('koa-bodyparser');
 const koaBody = require('koa-body').default;
 const path = require('path');
@@ -32,9 +32,10 @@ app.use(session({
 
 }, app));
 
-// app.use(cors({
-//   origin: 'http://localhost:3000/'
-// }));
+app.use(cors({
+  origin: '*',
+  credentials: true,
+}));
 
 
 // 统一响应返回的数据
@@ -54,14 +55,14 @@ app.use(async (ctx, next) => {
   const isApi = /^\/api/;
   const url = ctx.request.url;
   // 认证失败
-  console.log(url, filter.includes(url), result);
+  // console.log(url, filter.includes(url), result);
   if (isApi.test(url) && !filter.includes(url) && !result) {
     ctx.fail('登录失效', 403);
     return;
   }
   // console.log(result, '验证');
   if (isApi.test(url) && !filter.includes(url)) {
-    ctx.userId = result.userId;    
+    ctx.userId = result.userId;
   }
   await next();
 });

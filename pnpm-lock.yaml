@@ -5,10 +5,10 @@ specifiers:
   koa: ^2.14.1
   koa-body: ^6.0.1
   koa-bodyparser: ^4.3.0
-  koa-cors: ^0.0.16
   koa-router: ^12.0.0
   koa-session: ^6.2.0
   koa-static: ^5.0.0
+  koa2-cors: ^2.0.6
   mongoose: ^6.8.1
   mongoose-update-if-current: ^1.4.0
   uuid: ^9.0.0
@@ -18,10 +18,10 @@ dependencies:
   koa: 2.14.1
   koa-body: 6.0.1
   koa-bodyparser: 4.3.0
-  koa-cors: 0.0.16
   koa-router: 12.0.0
   koa-session: 6.2.0
   koa-static: 5.0.0
+  koa2-cors: 2.0.6
   mongoose: 6.8.1
   mongoose-update-if-current: 1.4.0_mongoose@6.8.1
   uuid: 9.0.0
@@ -1373,10 +1373,6 @@ packages:
       koa-compose: 4.1.0
     dev: false
 
-  /koa-cors/0.0.16:
-    resolution: {integrity: sha512-s15knPxe3AJBi2I/ZMPL0pSqU+PLYLO6k5tI0AqClkzavowvocPlSdFUwaHNqtjHMhsGmiq2tiX/25iILJx9YA==}
-    dev: false
-
   /koa-router/12.0.0:
     resolution: {integrity: sha512-zGrdiXygGYW8WvrzeGsHZvKnHs4DzyGoqJ9a8iHlRkiwuEAOAPyI27//OlhoWdgFAEIM3qbUgr0KCuRaP/TCag==}
     engines: {node: '>= 12'}
@@ -1449,6 +1445,11 @@ packages:
       vary: 1.1.2
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /koa2-cors/2.0.6:
+    resolution: {integrity: sha512-JRCcSM4lamM+8kvKGDKlesYk2ASrmSTczDtGUnIadqMgnHU4Ct5Gw7Bxt3w3m6d6dy3WN0PU4oMP43HbddDEWg==}
+    engines: {node: '>= 7.6.0'}
     dev: false
 
   /lodash/4.17.21:

@@ -67,9 +67,18 @@ input.onchange = function(){
 const button = document.getElementsByTagName('button')[3];
 button.addEventListener('click', () => {
   axios.post('/api/user/register', {
-    username: '1234',
+    // username: 'admin',
+    // password: '123',
+    // role: 'admin',
+    // phone: 1233,
+    // introduce: '管理员',
+    // headImg: 'https://www.xueyueob.cn/cube/cube01.bmp',
+    username: 'editor',
     password: '456',
-    headImg: 'http://localhost:3000/upload/94329cd243cd027f123cde700.png',
+    role: 'editor',
+    phone: 123322,
+    introduce: '搬砖码农',
+    headImg: 'https://www.xueyueob.cn/cube/cube02.bmp',
   }, {})
   .then(function (response) {
     console.log(response);

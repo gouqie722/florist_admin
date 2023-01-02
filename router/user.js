@@ -17,6 +17,11 @@ const router = new Router();
   // await User.remove();
   // const result = await User.find({ _id: { $in: ['63b0533bd2082c8609e05fd0', '63b05356c0f567f180f1875c'] } });
   // console.log(result, '查询结果');
+  // const result = await User.findOne({ username: 'editor' })
+  // result.phone = 123;
+  // result.introduce = '用户';
+  // result.save();
+  // console.log(result, '修改成功');
 })();
 
 // 秘钥
@@ -55,7 +60,7 @@ router.post('/login', async (ctx) => {
   //     'sessionId',// name
   //     body.username,    //value(可替换为token)
   // );
-  ctx.success({ token });
+  ctx.success({ token, ...result[0] });
 });
 
 
@@ -65,8 +70,8 @@ router.post('/loginOut', async (ctx, next) => {
   next();
 })
 
-router.get('/getUsers', async (ctx, next) => {
-  const result = await User.findById(ctx.userId);
+router.get('/info/:id', async (ctx, next) => {
+  const result = await User.findById(ctx.params.id);
   console.log(result, '用户信息');
   ctx.success(result);
   next();
@@ -93,16 +98,50 @@ router.post('/register', async (ctx, next) => {
     next();
     return;
   }
-  console.log(result, 'result');
-  User.create({
-    username,
-    password,
-    headImg,
-  });
+  console.log(body, '注册 result ====', result);
+  await User.create(body);
   ctx.success({ username });
   next();
 })
 
+router.post('/update', async (ctx, next) => {
+  const body = ctx.request.body;
+  const { _id, ...reset } = body;
+  const result = await User.findOne({ _id });
+  if (!result) {
+    ctx.fail('该用户不存在');
+  } else {
+    // console.log(reset, '更新前的信息');
+    const res = await User.updateOne({ _id }, { ...reset });
+    ctx.success({ _id: body._id });
+  }
+  next();
+})
+
+router.get('/roles', async (ctx, next) => {
+  ctx.success({ list: [
+    { name: 'admin', description: '管理员', level: 0 },
+    { name: 'editor', description: '编辑人员', level: 1 }
+  ] });
+  next();
+});
 
 
+router.get('/list', async (ctx, next) => {
+  const result = await User.find();
+  ctx.success({ list: result });
+  next();
+})
+
+router.post('/delete', async (ctx, next) => {
+  const { _id } = ctx.request.body;
+  const result = await User.findOne({ _id });
+  if (!result) {
+    ctx.fail('该用户不存在');
+  } else {
+    await User.deleteOne({ _id });
+    ctx.success();
+  }
+  next();
+})
 module.exports = router;

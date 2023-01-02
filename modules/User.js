@@ -17,12 +17,20 @@ const userSchema = new mongoose.Schema({
   password: String,
   headImg: String,
   role: {
-    type: Number,
-    default: 0, // 用户角色 0表示用户，1表示系统管理员
+    type: String,
+    default: 'editor', // 用户角色 editor表示用户，admin表示系统管理员
   },
   phone: {
-    type: Number,
+    type: Number || String,
     default: null,
+  },
+  createTime: {
+    type: Number,
+    default: Date.now(),
+  },
+  introduce: {
+    type: String,
+    default: '',
   }
 }); // versionKey: 用于解决并发冲突
 
