@@ -8,6 +8,10 @@ const CartSchema = new mongoose.Schema({
   addTime: {
     type: Number,
     default: Date.now(),
+  },
+  userId: {
+    type: String,
+    required: true,
   }
 }); // versionKey: 用于解决并发冲突
 

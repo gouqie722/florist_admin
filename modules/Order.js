@@ -7,10 +7,15 @@ const OrderSchema = new mongoose.Schema({
     type: [{
       num: Number,
       id: String,
+      price: Number,
     }],
     required: true,
   },
-  total: Number,
+  orderNo: {
+    type: Number,
+    default: Date.now(),
+  },
+  totalPrice: Number,
   createTime: {
     type: Number,
     default: Date.now(),
@@ -30,6 +35,10 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     default: '00',
   },
+  userId: {
+    type: String,
+    required: true,
+  }
 }); // versionKey: 用于解决并发冲突
 
 
