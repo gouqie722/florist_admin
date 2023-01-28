@@ -13,8 +13,8 @@ document.getElementsByTagName('button')[0].addEventListener('click', () => {
 }, false);
 document.getElementsByTagName('button')[1].addEventListener('click', () => {
   axios.post('/api/user/login', {
-    username: '123',
-    password: '456'
+    username: 'admin',
+    password: '123'
   }, {
     // headers: {'token': localStorage.getItem('token')},
   })

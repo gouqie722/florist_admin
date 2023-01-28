@@ -10,6 +10,7 @@ specifiers:
   koa-static: ^5.0.0
   koa2-cors: ^2.0.6
   mongoose: ^6.8.1
+  mongoose-auto-increment-fix: ^5.0.2
   mongoose-update-if-current: ^1.4.0
   uuid: ^9.0.0
 
@@ -23,6 +24,7 @@ dependencies:
   koa-static: 5.0.0
   koa2-cors: 2.0.6
   mongoose: 6.8.1
+  mongoose-auto-increment-fix: 5.0.2_mongoose@6.8.1
   mongoose-update-if-current: 1.4.0_mongoose@6.8.1
   uuid: 9.0.0
 
@@ -1156,6 +1158,10 @@ packages:
     resolution: {integrity: sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow==}
     dev: false
 
+  /extend/3.0.2:
+    resolution: {integrity: sha512-fjquC59cD7CyW6urNXK0FBufkZcoiGG80wTuPujX590cB5Ttln20E2UB4S/WARVqhXffZl2LNgS+gQdPIIim/g==}
+    dev: false
+
   /fast-xml-parser/4.0.11:
     resolution: {integrity: sha512-4aUg3aNRR/WjQAcpceODG1C3x3lFANXRo8+1biqfieHmg9pyMt7qB4lQV/Ta6sJCTbA5vfD8fnA8S54JATiFUA==}
     hasBin: true
@@ -1509,6 +1515,15 @@ packages:
       saslprep: 1.0.3
     transitivePeerDependencies:
       - aws-crt
+    dev: false
+
+  /mongoose-auto-increment-fix/5.0.2_mongoose@6.8.1:
+    resolution: {integrity: sha512-HQRcJl8cNqGFwMQtFD3oMrHI0HYGarbv5YQb3q5GQwYbbs1+AFkArerd3Hkb7u1ozoqveVvrt1NV/jFcHEt/gw==}
+    peerDependencies:
+      mongoose: ^4.1.12
+    dependencies:
+      extend: 3.0.2
+      mongoose: 6.8.1
     dev: false
 
   /mongoose-update-if-current/1.4.0_mongoose@6.8.1:

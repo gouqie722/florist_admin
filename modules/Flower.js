@@ -1,6 +1,7 @@
 // 1. 定义User Schema
 const mongoose = require('mongoose');
 const { updateIfCurrentPlugin } = require('mongoose-update-if-current');
+const { plugin } = require('mongoose-auto-increment-fix');
 
 const FlowerSchema = new mongoose.Schema({
   // 花的名字
@@ -28,7 +29,8 @@ const FlowerSchema = new mongoose.Schema({
   },
 }); // versionKey: 用于解决并发冲突
 
-
 FlowerSchema.plugin(updateIfCurrentPlugin);
+FlowerSchema.plugin(plugin, { model: 'Flower', field: 'number' });
+
 // 2. 通过User Schema定义模型，最终导出模型
-module.exports = mongoose.model('Flower', FlowerSchema);
+module.exports = mongoose.model('Flower', FlowerSchema);;
