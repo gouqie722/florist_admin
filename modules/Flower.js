@@ -7,19 +7,22 @@ const FlowerSchema = new mongoose.Schema({
   // 花的名字
   name: String,
   // 图片
-  imgUrl: String,
+  coverImg: String,
   // 上架时间
-  putTime: Number,
+  putTime: {
+    type: Number,
+    default: () => new Date().getTime(),
+  },
   // 花的种类
   type: String,
   // 过期时间
-  expiration: Number,
+//   expiration: Number,
   // 价格
   price: String,
   // 热门级别
   hot: Number,
   // 库存
-  stock: Number,
+  stockNum: Number,
   // 描述信息
   describe: String,
   // 是否已下架 00 01

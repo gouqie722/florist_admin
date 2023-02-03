@@ -38,6 +38,39 @@ router.get('/list', async (ctx, next) => {
   next();
 });
 
+router.get('/flower_types', async (ctx, next) => {
+  const list = [
+  {
+    type: '00',
+    v: '切花'
+  },
+  {
+    type: '01',
+    v: '切叶'
+  },
+  {
+    type: '02',
+    v: '绿植'
+  },
+  {
+    type: '03',
+    v: '盆花'
+  },
+  {
+    type: '04',
+    v: '玫瑰'
+  },
+  {
+    type: '05',
+    v: '其他'
+  },
+];
+  ctx.success({
+    list,
+  });
+  next();
+});
+
 
 router.get('/detail/:id', async (ctx, next) => {
   const { id } = ctx.params;
