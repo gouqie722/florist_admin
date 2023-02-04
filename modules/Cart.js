@@ -7,7 +7,7 @@ const CartSchema = new mongoose.Schema({
   flowerId: String,
   addTime: {
     type: Number,
-    default: Date.now(),
+    default: () => new Date().getTime(),
   },
   userId: {
     type: String,

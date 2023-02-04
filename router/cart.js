@@ -16,21 +16,25 @@ const router = new Router();
 router.post('/add', async (ctx, next) => {
   const body = ctx.request.body;
   const cartItem = await Cart.findOne({ flowerId: body.flowerId });
+  console.log('添加到购物车 userId', ctx.userId);
   if (cartItem) {
     cartItem.num += body.num;
     cartItem.save();
     console.log(cartItem, '已保存');
   } else {
-    const result = await Cart.create(body);
+    const result = await Cart.create({ ...body, userId: ctx.userId });
     console.log(result, '添加成功');
   }
-  ctx.success({ flowerId: body.flowerId });
+  const list = await Cart.find({ userId: ctx.userId });
+  // console.log(list, '购物车列表');
+  ctx.success({ flowerId: body.flowerId, total: list.length });
   next();
 });
 
 
 router.get('/list', async (ctx, next) => {
-  const result = await Cart.find();
+  console.log('购物车列表 userId', ctx.userId)
+  const result = await Cart.find({ userId: ctx.userId });
   const newArr = result.map(item => item.flowerId);
   const flowers = await Flower.find({ _id: { $in: newArr } });
   const list = result.map((item, index) => ({ ...flowers[index], num: result[index].num, addTime: result[index].addTime }));
