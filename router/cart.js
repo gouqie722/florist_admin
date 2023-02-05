@@ -33,16 +33,43 @@ router.post('/add', async (ctx, next) => {
 
 
 router.get('/list', async (ctx, next) => {
-  console.log('购物车列表 userId', ctx.userId)
+  // console.log('购物车列表 userId', ctx.userId)
   const result = await Cart.find({ userId: ctx.userId });
   const newArr = result.map(item => item.flowerId);
   const flowers = await Flower.find({ _id: { $in: newArr } });
-  const list = result.map((item, index) => ({ ...flowers[index], num: result[index].num, addTime: result[index].addTime }));
-  console.log(list, '购物车查询结果', flowers);
+  const list = result.map((item, index) => ({
+    ...flowers[index],
+    num: result[index].num,
+    addTime: result[index].addTime,
+    flowerId: result[index].flowerId,
+    cartItemId: result[index]._id,
+  }));
+  console.log(list, '购物车查询结果', result);
   ctx.success({ list });
   next();
 })
 
+/**
+ * 购物车商品数量的加减
+ */
+router.post('/changeNum', async (ctx, next) => {
+  const body = ctx.request.body;
+  const cartItem = await Cart.findOne({ _id: body._id });
+  cartItem.num = body.num;
+  await cartItem.save();
+  console.log(await Cart.findOne({ _id: body._id }), 'changeNum');
+  ctx.success({ _id: body._id, num: cartItem.num });
+  next();
+});
+
+router.post('/delete', async (ctx, next) => {
+  const body = ctx.request.body;
+  console.log(body, 'body');
+  const res = await Cart.deleteOne({ _id: body._id });
+  console.log('删除成功', res, await Cart.findById(body._id));
+  ctx.success(res);
+  next();
+})
 
 router.post('/clear', async (ctx, next) => {
   const result = await Cart.remove();
