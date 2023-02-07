@@ -65,8 +65,8 @@ router.post('/changeNum', async (ctx, next) => {
 router.post('/delete', async (ctx, next) => {
   const body = ctx.request.body;
   console.log(body, 'body');
-  const res = await Cart.deleteOne({ _id: body._id });
-  console.log('删除成功', res, await Cart.findById(body._id));
+  const res = await Cart.deleteMany({ _id: { $in: body._ids } });
+  console.log('删除成功', res, await Cart.findById(body._ids));
   ctx.success(res);
   next();
 })
