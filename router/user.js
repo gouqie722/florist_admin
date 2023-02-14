@@ -46,6 +46,7 @@ router.post('/login', async (ctx) => {
   // 验证密码是否正确
   const token = jwt.publish(ctx, 3600 * 2, {
     userId: result[0]._id,
+    role: result[0].role,
   })
   console.log(result[0]._id, '查询结果 用户id', token);
   // 验证 如果验证不通过抛出错误

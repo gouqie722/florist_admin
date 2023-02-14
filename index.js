@@ -63,6 +63,7 @@ app.use(async (ctx, next) => {
   // console.log(result, '验证');
   if (isApi.test(url) && !filter.includes(url)) {
     ctx.userId = result.userId;
+    ctx.role = result.role;
   }
   await next();
 });

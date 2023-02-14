@@ -30,7 +30,14 @@ router.post('/create', async (ctx, next) => {
 
 
 router.get('/list', async (ctx, next) => {
-  const result = await Order.find();
+  const { role, userId } = ctx;
+  let result = [];
+  // 如果是系统管理员则返回全部订单
+  if (role === 'admin') {
+    result = await Order.find();
+  } else {
+    result = await Order.find({ userId });
+  }
   ctx.success({
     list: result,
   });
@@ -91,11 +98,13 @@ router.get('/detail/:id', async (ctx, next) => {
 // 取消订单
 router.post('/cancel', async (ctx, next) => {
   const { id } = ctx.request.body;
+  const { role } = ctx;
+  console.log(role, '身份');
   if (!id) {
     ctx.fail('参数不能为空');
   } else {
     const result = await Order.findOne({ _id: id });
-    result.status = '02';
+    result.status = role === 'admin' ? '06' : '02';
     result.save();
     ctx.success({ id });
   }
