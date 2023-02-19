@@ -125,4 +125,18 @@ router.post('/done', async (ctx, next) => {
   next();
 })
 
+/**
+ * 订单支付
+ */
+router.post('/pay', async (ctx, next) => {
+  const { id } = ctx.request.body;
+  if (!id) {
+    ctx.fail('参数不能为空');
+  } else {
+    const result = await Order.findOne({ _id: id });
+    result.status = '01';
+    result.save();
+    ctx.success({ id });
+  }
+})
 module.exports = router;

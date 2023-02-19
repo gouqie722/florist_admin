@@ -24,7 +24,7 @@ router.use('/log', ctx => {
 
 router.post('/upload', async (ctx, next) => {
   const files = ctx.request.files; // 获取上传的image数据
-  const filepath = 'http://39.108.186.101:3000/upload/' + files.file.newFilename;
+  const filepath = 'http://localhost:3000/upload/' + files.file.newFilename;
   // console.log(filepath, '文件');
   ctx.success({ filepath });
   next();

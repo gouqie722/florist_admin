@@ -84,7 +84,7 @@ router.post('/delete', async (ctx, next) => {
   if (!id) {
     ctx.fail('参数不能为空');
   } else {
-    const result = await Flower.findOneAndDelete({ _id: id });
+    const result = await Flower.deleteOne({ _id: id });
     console.log(result, '删除商品');
     ctx.success(null);
   }
@@ -93,12 +93,13 @@ router.post('/delete', async (ctx, next) => {
 
 
 router.post('/update', async (ctx, next) => {
-  const { id } = ctx.request.body;
-  if (!id) {
+  const { _id, ...rest } = ctx.request.body;
+  console.log(_id, rest, '更新');
+  if (!_id) {
     ctx.fail('参数不能为空');
   } else {
-    const result = await Flower.findByIdAndUpdate({ _id: id });
-    console.log(result, '删除商品');
+    const result = await Flower.updateOne({ _id, ...rest });
+    console.log(result, '更新商品');
     ctx.success({ id: result._id });
   }
   next();
