@@ -96,4 +96,4 @@ app.use(bodyParser());
 // api
 app.use(routerApi.routes());
 
-app.listen(3000, () => console.log('server is running'));
+app.listen(3000, () => console.log('server is running http://localhost:3000/'));

@@ -112,6 +112,7 @@ router.post('/cancel', async (ctx, next) => {
 });
 
 
+// 完成订单
 router.post('/done', async (ctx, next) => {
   const { id } = ctx.request.body;
   if (!id) {
@@ -137,6 +138,22 @@ router.post('/pay', async (ctx, next) => {
     result.status = '01';
     result.save();
     ctx.success({ id });
+  }
+  next();
+})
+
+
+/**
+ * 删除订单
+ */
+router.post('/delete', async (ctx, next) => {
+  const { id } = ctx.request.body;
+  if (!id) {
+    ctx.fail('参数不能为空');
+  } else {
+    const result = await Order.deleteOne({ _id: id });
+    console.log(result, '删除订单');
+    ctx.success(null);
   }
 })
 module.exports = router;
