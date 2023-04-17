@@ -26,10 +26,10 @@ const OrderSchema = new mongoose.Schema({
     default: new Date().getTime() + 1000 * 60 * 60 * 2,
   },
   // 配送地址
-  // address: {
-  //   type: String,
-  //   required: true,
-  // },
+  address: {
+    type: String,
+    default: '',
+  },
   // 订单状态 00: 未支付  01: 已支付  02: 已取消  03: 已发货 04：已完成 05：超时未支付 06: 商家关闭
   status: {
     type: String,

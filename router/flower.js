@@ -23,7 +23,7 @@ router.post('/upper_or_lower', async (ctx, next) => {
       ctx.fail('该花品不存在');
     } else {
       result.lower = lower;
-      result.save();
+      await result.save();
       ctx.success({ id: result._id });
     }
   }

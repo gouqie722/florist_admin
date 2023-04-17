@@ -6,6 +6,7 @@ const cors = require('koa2-cors');
 const bodyParser = require('koa-bodyparser');
 const koaBody = require('koa-body').default;
 const path = require('path');
+const pathname = path.resolve('/public/upload/03610fecaf71fd48ade81e700.png');
 
 require('./modules/index.js');
 const routerResponse = require('./router/routerResponse.js');

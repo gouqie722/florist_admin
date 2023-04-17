@@ -2,6 +2,7 @@ const Router = require('koa-router');
 const Cart = require('../modules/Cart.js');
 const Flower = require('../modules/Flower.js');
 const Order = require('../modules/Order.js');
+const User = require('../modules/User.js');
 
 const router = new Router();
 
@@ -13,13 +14,14 @@ router.post('/create', async (ctx, next) => {
     ctx.fail('参数不能为空');
   } else {
     const newArr = flowers.map(item => item.id);
+    const userInfo = await User.findOne({ _id: ctx.userId });
     // 查询所有商品的价格并且相加
     const allPriceArr = await Flower.find({ _id: { $in: newArr } }, { price: 1 });
     const result = await Order.create({
       flowers,
       total: flowers.reduce((prev, item) => prev + item.num * item.price, 0),
       userId: ctx.userId,
-      // address: '广东省广州市天河区',
+      address: userInfo.address,
     });
     const res = await Cart.deleteMany({ flowerId: { $in: newArr } });
     console.log('创建订单并且删除购物车', res);

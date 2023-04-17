@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema({
   username: String,
   password: String,
   headImg: String,
+  balance: {
+    type: Number,
+    default: 0,
+  },
   role: {
     type: String,
     default: 'editor', // 用户角色 editor表示用户，admin表示系统管理员
@@ -29,6 +33,10 @@ const userSchema = new mongoose.Schema({
     default: Date.now(),
   },
   introduce: {
+    type: String,
+    default: '',
+  },
+  address: {
     type: String,
     default: '',
   }

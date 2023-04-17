@@ -145,4 +145,13 @@ router.post('/delete', async (ctx, next) => {
   }
   next();
 })
+
+router.post('/recharge', async (ctx, next) => {
+  const { _id, number } = ctx.request.body;
+  const result = await User.findOne({ _id });
+  result.balance += Number(number);
+  await result.save();
+  ctx.success();
+  next();
+})
 module.exports = router;
