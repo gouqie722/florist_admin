@@ -137,9 +137,21 @@ router.post('/pay', async (ctx, next) => {
     ctx.fail('参数不能为空');
   } else {
     const result = await Order.findOne({ _id: id });
-    result.status = '01';
-    result.save();
-    ctx.success({ id });
+    const { userId } = ctx;
+    const userInfo = await User.findOne({ _id: userId });
+    // 判断用户余额是否大于订单的金额
+    const { total } = result;
+    const { balance } = userInfo;
+    if (balance < total) {
+      ctx.fail('余额不足， 请联系管理员充值', 100001);
+    } else {
+      console.log(userInfo, '发起支付的用户', id);
+      result.status = '01';
+      await result.save();
+      userInfo.balance = balance - total;
+      await userInfo.save();
+      ctx.success({ id, msg: '支付成功' });
+    }
   }
   next();
 })

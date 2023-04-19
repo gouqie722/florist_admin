@@ -151,7 +151,7 @@ router.post('/recharge', async (ctx, next) => {
   const result = await User.findOne({ _id });
   result.balance += Number(number);
   await result.save();
-  ctx.success();
+  ctx.success({ _id });
   next();
 })
 module.exports = router;
