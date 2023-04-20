@@ -77,6 +77,16 @@ router.get('/detail/:id', async (ctx, next) => {
   const result = await Flower.findOne({ _id: id });
   ctx.success({ result });
   next();
+});
+
+router.get('/batch', async (ctx, next) => {
+  const { list } = ctx.query;
+  let ids = JSON.parse(list);
+  ids = ids.map(item => ({ _id: item }));
+  const result = await Flower.find({ $or: ids });
+  console.log('params', ids);
+  ctx.success({ list: result });
+  next();
 })
 
 router.post('/delete', async (ctx, next) => {
