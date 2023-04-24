@@ -8,7 +8,7 @@ const router = new Router();
 
 router.post('/create', async (ctx, next) => {
   const body = ctx.request.body;
-  const { flowers } = body;
+  const { flowers, address } = body;
   console.log('userId', ctx.userId);
   if (!flowers || !flowers.length) {
     ctx.fail('参数不能为空');
@@ -21,7 +21,7 @@ router.post('/create', async (ctx, next) => {
       flowers,
       total: flowers.reduce((prev, item) => prev + item.num * item.price, 0),
       userId: ctx.userId,
-      address: userInfo.address,
+      address: address || '',
     });
     const res = await Cart.deleteMany({ flowerId: { $in: newArr } });
     console.log('创建订单并且删除购物车', res);
@@ -147,8 +147,9 @@ router.post('/pay', async (ctx, next) => {
     } else {
       console.log(userInfo, '发起支付的用户', id);
       result.status = '01';
-      await result.save();
+      result.payType = '余额支付';
       userInfo.balance = balance - total;
+      await result.save();
       await userInfo.save();
       ctx.success({ id, msg: '支付成功' });
     }
@@ -169,5 +170,54 @@ router.post('/delete', async (ctx, next) => {
     console.log(result, '删除订单');
     ctx.success(null);
   }
+  next();
+});
+
+/**
+ * 修改订单
+ */
+router.post('/update', async (ctx, next) => {
+  const { id, address } = ctx.request.body;
+  if (!id) {
+    ctx.fail('参数不能为空');
+  } else {
+    const result = await Order.findOne({ _id: id });
+    result.address = address;
+    await result.save();
+    ctx.success(null);
+  }
+  next();
+});
+
+/**
+ * 订单出库
+ */
+router.post('/shipped', async (ctx, next) => {
+  const { id } = ctx.request.body;
+  console.log('ctx.params', ctx.params);
+  if (!id) {
+    ctx.fail('参数不能为空');
+  } else {
+    const result = await Order.findOne({ _id: id });
+    result.status = '03';
+    await result.save();
+    ctx.success(null);
+  }
+  next();
 })
+
+router.post('/sign', async (ctx, next) => {
+  const { id } = ctx.request.body;
+  console.log('sign', id);
+  if (!id) {
+    ctx.fail('参数不能为空');
+  } else {
+    const result = await Order.findOne({ _id: id });
+    result.status = '04';
+    await result.save();
+    ctx.success(null);
+  }
+  next();
+});
+
 module.exports = router;

@@ -20,6 +20,10 @@ const OrderSchema = new mongoose.Schema({
     type: Number,
     default: () => new Date().getTime(),
   },
+  payType: {
+    type: String,
+    default: '',
+  },
   // 订单有效时间
   expiration: {
     type: Number,
